@@ -1,18 +1,8 @@
 import java.io.*;
 import java.util.*;
 
-
-
-static int sum(String num)
+class googlements
 {
-    int sum=0;
-    for(int i=0;i<num.length();i++)
-    {
-        sum += num.charAt(i)-48;
-    }
-    return sum;
-}
-
 public static void main(String[] args) throws IOException
     {		
 		InputStreamReader ir = new InputStreamReader(System.in);
@@ -25,15 +15,65 @@ public static void main(String[] args) throws IOException
         {
             String num = br.readLine();
             int[] index = new int[num.length()];
+            
 
-            for( int j=0;j<num.length();j++)
+            int sum = 0;
+            int numans=1;
+            int fact0= fact(num.length());
+            int fact=0;
+
+            if(Integer.parseInt(num)!=1)
+            {for( int j=0;j<num.length();j++)
             {
                 index[j]= num.charAt(j)-48;
-            }
-            while(sum(index)<index.length)
-            {
-                
+                sum+=index[j];
             }
 
+            while(sum<=num.length())
+            {  fact=fact0; 
+                for(int j=0;j<num.length();j++)
+                {
+                    if(index[j]!=0)
+                    fact /= fact(index[j]);
+                }
+                numans+=fact;
 
+                int[] copy = new int[num.length()];
+                int m =0;
+                for(int j=0;j<num.length();j++)
+                {
+                    for(int q=0;q<index[j];q++)
+                    {
+                        copy[m++]=j+1;
+                    }
+                }
+                sum=0;int flag=0;
+                for(int j=0;j<num.length();j++)
+                {   
+                    if(index[j]!=copy[j])
+                    flag=1;
+
+                    index[j]=copy[j];
+                    sum+=index[j];
+                }
+
+                if(flag==0)
+                break;
+
+            }}
+            ans+=(numans)+"\n";
+            
         }
+        System.out.println(ans);
+        
+}
+    }
+
+
+    public static int fact(int n)
+    {   if(n>1)
+        return n*(n-1);
+        else
+        return 1;
+    } 
+}         
